@@ -4,7 +4,7 @@ project(sjtu_drone)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS 
+find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
     std_msgs
@@ -25,7 +25,7 @@ endif()
 
 
 link_directories(${GAZEBO_LIBRARY_DIRS} ${Boost_LIBRARIES} ${PROTOBUF_LIBRARIES} ${OGRE_LIBRARY_DIRS})
-include_directories(${OpenCV_INCLUDE_DIR} 
+include_directories(${OpenCV_INCLUDE_DIR}
                     ${Boost_INCLUDE_DIR}
                     ${catkin_INCLUDE_DIRS}
                     ${GAZEBO_INCLUDE_DIRS}
@@ -46,14 +46,14 @@ catkin_package(
 add_library( plugin_ros_init SHARED
     src/plugin_ros_init.cpp
 )
-target_link_libraries( plugin_ros_init 
+target_link_libraries( plugin_ros_init
    ${catkin_LIBRARIES}
    ${GAZEBO_LIBRARIES}
    ${OGRE_LIBRARY_DIRS}
 )
 
 set_target_properties( plugin_ros_init
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
@@ -72,7 +72,7 @@ target_link_libraries( plugin_drone
 )
 
 set_target_properties( plugin_drone
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
@@ -110,13 +110,38 @@ target_link_libraries( plugin_ros_cam
 )
 
 set_target_properties( plugin_ros_cam
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
 
-################# 5. A program using the keyboard to control the quadrotor #####  
+################# 5. A program using the keyboard to control the quadrotor #####
 set(CMAKE_AUTOUIC ON)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+set(QT_LIBRARIES Qt5::Widgets)
+
+qt5_wrap_cpp(QT_MOC include/DialogKeyboard.h)
+qt5_add_resources(RESOURCES include/drone_keyboard.qrc)
+
+
+add_executable( drone_keyboard
+  src/DialogKeyboard.cpp
+  src/drone_object_ros.cpp
+  src/drone_keyboard.cpp
+  ${RESOURCES}
+  ${QT_MOC}
+)
+
+target_link_libraries( drone_keyboard
+  ${QT_LIBRARIES}
+  ${catkin_LIBRARIES}
+)
+
+################ 6. A simple program for spawning a drone model ###############
+add_executable( spawn_drone
+   src/spawn_drone.cpp
+)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 set(QT_LIBRARIES Qt5::Widgets)
@@ -180,7 +205,7 @@ install(DIRECTORY include
 
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-  
+
 install(DIRECTORY meshes
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
@@ -189,7 +214,7 @@ install(DIRECTORY models
 
 install(DIRECTORY plugins
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-  
+
 install(DIRECTORY scripts
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 

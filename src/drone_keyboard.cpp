@@ -1,4 +1,6 @@
+#include <drone_object_ros.h>
 #include <DialogKeyboard.h>
+#include <iostream>
 #include <QtWidgets>
 #include <drone_object_ros.h>
 #include <iostream>
