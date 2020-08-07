@@ -17,4 +17,8 @@
   <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model sjtu_drone -x 0 -y 0 -z 0"
     respawn="false" output="screen" />
+
+  <!-- Launch Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(dirname)/../rviz/drone.rviz"/>
+
 </launch>
