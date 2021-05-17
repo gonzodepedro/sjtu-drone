@@ -138,31 +138,6 @@ target_link_libraries( drone_keyboard
   ${catkin_LIBRARIES}
 )
 
-################ 6. A simple program for spawning a drone model ###############
-add_executable( spawn_drone
-   src/spawn_drone.cpp
-)
-
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-set(QT_LIBRARIES Qt5::Widgets)
-
-qt5_wrap_cpp(QT_MOC include/DialogKeyboard.h)
-qt5_add_resources(RESOURCES include/drone_keyboard.qrc)
-
-
-add_executable( drone_keyboard
-  src/DialogKeyboard.cpp
-  src/drone_object_ros.cpp
-  src/drone_keyboard.cpp
-  ${RESOURCES}
-  ${QT_MOC}
-)
-
-target_link_libraries( drone_keyboard
-  ${QT_LIBRARIES}
-  ${catkin_LIBRARIES}
-)
-
 ################## 7. A sonar sensor plugin for the quadrotor ####################
 add_library( plugin_ros_sonar SHARED
     src/plugin_ros_sonar.cpp
