@@ -21,4 +21,7 @@
   <!-- Launch Rviz -->
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(dirname)/../rviz/drone.rviz"/>
 
+  <!-- start keyboard control ui -->
+  <node name="drone_keyboard" pkg="sjtu_drone" type="drone_keyboard" respawn="false"/>
+
 </launch>
