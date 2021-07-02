@@ -46,6 +46,7 @@ docker run -it \
   -v "/dev/input:/dev/input" \
   --rm \
   --security-opt seccomp=unconfined \
+  --gpus all \
   $DOCKER_OPTS \
   $IMG \
   #${@:2}
